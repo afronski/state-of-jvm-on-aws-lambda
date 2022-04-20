@@ -4,6 +4,11 @@
 # Node.js dependencies.
 node_modules/
 
+# Java dependencies.
+build/
+.gradle/
+.settings/
+
 # IDEs.
 .vscode/
 .idea/

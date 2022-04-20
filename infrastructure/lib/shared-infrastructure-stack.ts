@@ -1,39 +1,16 @@
-import * as statement from "cdk-iam-floyd";
-
 import { CfnOutput, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
-import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { Repository } from "aws-cdk-lib/aws-codecommit";
 
 import { RestApi } from "aws-cdk-lib/aws-apigateway";
 
 export class SharedInfrastructureStack extends Stack {
-  private readonly sharedAPI: RestApi;
+  public readonly sharedAPI: RestApi;
   public readonly repositoryCloneUrlHttp: string;
 
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
-
-    // Adding relevant IAM roles.
-
-    const sharedLambdaRole = new Role(this, "AWSLambdaSharedIAMRole", {
-      roleName: "lambda-iam-role",
-      assumedBy: new ServicePrincipal("lambda.amazonaws.com")
-    });
-
-    sharedLambdaRole.addToPolicy(
-      new statement.S3()
-        .allow()
-        .on("arn:aws:s3:::*")
-        .on("arn:aws:s3:::*/*")
-        .toGetObject()
-        .toListBucket()
-    );
-
-    new CfnOutput(this, "AWSLambdaSharedIAMRoleARN", {
-      value: sharedLambdaRole.roleArn
-    });
 
     // AWS CodeCommit repository.
 

@@ -23,7 +23,12 @@ not make this artificially bound only to *Java* it additionally contains similar
 ## How to use that repository?
 
 ```shell
+# After checking out the repository...
+
+$ make
+$ . .env/bin/activate
 $ cd infrastructure
+$ npm install
 
 $ export AWS_USERNAME=<YOUR_IAM_USERNAME>
 
