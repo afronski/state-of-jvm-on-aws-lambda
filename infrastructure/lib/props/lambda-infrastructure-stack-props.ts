@@ -1,0 +1,17 @@
+import { StackProps } from "aws-cdk-lib";
+
+import { RestApi } from "aws-cdk-lib/aws-apigateway";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
+
+export interface LambdaInfrastructureStackProps extends StackProps {
+  functionName: string;
+
+  runtime: Runtime;
+
+  memorySize: number;
+
+  handler: string;
+  artifactPath: string;
+
+  sharedAPI: RestApi;
+}
