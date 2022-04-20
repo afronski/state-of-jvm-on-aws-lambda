@@ -1,4 +1,4 @@
-import { Stack, Duration } from "aws-cdk-lib";
+import { Duration, NestedStack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
@@ -7,7 +7,7 @@ import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
 import { LambdaInfrastructureStackProps } from "./props/lambda-infrastructure-stack-props";
 
-export class LambdaInfrastructureStack extends Stack {
+export class LambdaInfrastructureStack extends NestedStack {
 
   constructor(scope: Construct, id: string, props: LambdaInfrastructureStackProps) {
     super(scope, id, props);

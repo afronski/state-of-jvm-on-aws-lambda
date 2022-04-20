@@ -35,7 +35,7 @@ $ export AWS_USERNAME=<YOUR_IAM_USERNAME>
 $ cdk bootstrap
 
 $ npm run package
-$ cdk deploy SharedInfrastructureStack   # Get the repository URL from the outputs.
+$ cdk deploy Infrastructure-Shared       # Get the repository URL from the outputs.
 
 # Generate AWS CodeCommit HTTPS credentials in the AWS IAM for your user.
 
