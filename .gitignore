@@ -1,0 +1,17 @@
+# Python virtualenv directory.
+.env/
+
+# Node.js dependencies.
+node_modules/
+
+# IDEs.
+.vscode/
+.idea/
+
+# Archives.
+*.zip
+*.tar.gz
+
+# Temporary artifacts:
+.tmp/
+logs/
