@@ -31,6 +31,9 @@ $ cdk bootstrap
 
 $ npm run package
 $ cdk deploy SharedInfrastructureStack   # Get the repository URL from the outputs.
+
+# Generate AWS CodeCommit HTTPS credentials in the AWS IAM for your user.
+
 $ git remote add aws ...                 # Put that repository URL here.
 $ git push aws main
 
