@@ -24,7 +24,7 @@ export class IDEInfrastructureStack extends Stack {
     // Amazon S3 Bucket for various logs.
 
     this.outputBucket = new Bucket(this, "LogsS3Bucket", {
-      bucketName: `test-infrastructure-stack-bucket-for-logs-in-${region}`,
+      bucketName: `ide-infrastructure-stack-bucket-for-logs-in-${region}`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL
     });
 
