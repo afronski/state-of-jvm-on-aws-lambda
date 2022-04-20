@@ -8,6 +8,8 @@ node_modules/
 build/
 .gradle/
 .settings/
+.classpath
+.project
 
 # IDEs.
 .vscode/
