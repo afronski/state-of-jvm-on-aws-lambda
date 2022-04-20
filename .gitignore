@@ -10,6 +10,7 @@ build/
 .settings/
 .classpath
 .project
+*.class
 
 # IDEs.
 .vscode/
