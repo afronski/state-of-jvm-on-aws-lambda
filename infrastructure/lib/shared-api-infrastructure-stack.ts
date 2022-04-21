@@ -98,7 +98,7 @@ export class SharedAPIInfrastructureStack extends Stack {
       memorySize: 256,
 
       handler: "ipchecker.app::handler",
-      artifactPath: "../sources/23-clojure-jit-opt/target/ip-checker-1.0.0-standalone.jar",
+      artifactPath: "../sources/22-clojure-jit-opt/target/ip-checker-1.0.0-standalone.jar",
 
       sharedAPI: this.sharedAPI,
 
