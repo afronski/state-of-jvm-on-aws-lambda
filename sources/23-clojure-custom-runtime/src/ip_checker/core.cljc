@@ -11,6 +11,6 @@
 
 (defn CheckIPLambda
   [{:keys [event ctx] :as request}]
-  (hr/json (check-ip)))
+  (hr/json {"ip" (check-ip)}))
 
 (h/entrypoint [#'CheckIPLambda])
