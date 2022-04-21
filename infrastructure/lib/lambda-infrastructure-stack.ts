@@ -14,8 +14,8 @@ export class LambdaInfrastructureStack extends NestedStack {
 
     const variables: { [key: string]: string } = {};
 
-    if (!!props.stopTieredCompilation) {
-      variables["JAVA_TOOL_OPTIONS"] = "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+    if (props.stopTieredCompilation) {
+      variables["JAVA_TOOL_OPTIONS"] = "-XX:+TieredCompilation -XX:TieredStopAtLevel=1";
     }
 
     const implementation = new Function(this, "LambdaFunction", {
