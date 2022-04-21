@@ -17,6 +17,9 @@ mainSteps:
     - yum -y remove aws-cli
     - yum -y install amazon-linux-extras
     - yum -y install sqlite curl wget telnet jq strace git nc python3 python3-pip bash-completion
+    - yum -y install tar unzip gzip bzip2-devel ed gcc gcc-c++ gcc-gfortran less libcurl-devel
+    - yum -y install openssl openssl-devel readline-devel xz-devel zlib-devel glibc-static
+    - yum -y install libcxx libcxx-devel llvm-toolset-7 zlib-static
 
     - echo '=== INSTALL AND CONFIGURE AWS CLI ==='
     - sudo -i -u ec2-user bash -c "pip install --user -U boto boto3 botocore awscli aws-sam-cli"
@@ -94,14 +97,16 @@ mainSteps:
     - echo '=== INSTALL AND CONFIGURE JAVA AND ITS DEPENDENCIES ==='
     - yum install -y java-11-amazon-corretto-headless
 
-    - GRADLE_VERSION=5.0
-    - GRADLE_URL="https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip"
+    - GRADLE_VERSION=7.4.1
+    - GRADLE_URL="https://downloads.gradle-dn.com/distributions/gradle-${GRADLE_VERSION}-bin.zip"
     - mkdir -p /opt/gradle
     - wget -O "/tmp/gradle-${GRADLE_VERSION}-bin.zip" "${GRADLE_URL}"
     - unzip -d /opt/gradle "/tmp/gradle-${GRADLE_VERSION}-bin.zip"
     - chown -R ec2-user:ec2-user /opt/gradle
+    - ln -s "/opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle
 
-    - wget -O "/tmp/clojure-install.sh" "https://download.clojure.org/install/linux-install-1.11.1.1105.sh"
+    - CLJ_VERSION=1.11.1.1105
+    - wget -O "/tmp/clojure-install.sh" "https://download.clojure.org/install/linux-install-${CLJ_VERSION}.sh"
     - chmod a+x /tmp/clojure-install.sh
     - /tmp/clojure-install.sh
 
@@ -109,8 +114,28 @@ mainSteps:
     - chmod a+x "/usr/local/bin/lein"
     - chown ec2-user:ec2-user "/usr/local/bin/lein"
 
-    - BABASHKA_URL="https://github.com/babashka/babashka/releases/download/v0.8.1/babashka-0.8.1-linux-amd64-static.tar.gz"
+    - BABASHKA_VERSION=0.8.1
+    - BABASHKA_URL="https://github.com/babashka/babashka/releases/download/v${BABASHKA_VERSION}/babashka-${BABASHKA_VERSION}-linux-amd64-static.tar.gz"
     - wget -qO- "${BABASHKA_URL}" | tar xvz -C /usr/local/bin
+    - chmod a+x "/usr/local/bin/bb"
+    - chown ec2-user:ec2-user "/usr/local/bin/bb"
+
+    - MVN_VERSION=3.6.3
+    - MVN_FOLDERNAME="apache-maven-${MVN_VERSION}"
+    - MVN_FILENAME="apache-maven-${MVN_VERSION}-bin.tar.gz"
+    - curl -4 -L "https://mirrors.ukfast.co.uk/sites/ftp.apache.org/maven/maven-3/${MVN_VERSION}/binaries/${MVN_FILENAME}" | tar -xvz
+    - mv ${MVN_FOLDERNAME} /usr/lib/maven
+    - rm -rf ${MVN_FOLDERNAME}
+    - ln -s /usr/lib/maven/bin/mvn /usr/bin/mvn
+
+    - GRAAL_VERSION=22.0.0.2
+    - GRAAL_FOLDERNAME="graalvm-ce-java11-${GRAAL_VERSION}"
+    - GRAAL_FILENAME="graalvm-ce-java11-linux-amd64-${GRAAL_VERSION}.tar.gz"
+    - curl -4 -L "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME}" | tar -xvz
+    - mv "${GRAAL_FOLDERNAME}" /usr/lib/graalvm
+    - rm -rf "${GRAAL_FOLDERNAME}"
+    - /usr/lib/graalvm/bin/gu install native-image
+    - ln -s /usr/lib/graalvm/bin/native-image /usr/bin/native-image
 
     - echo '=== INSTALL AND CONFIGURE DOCKER ==='
     - yum install -y docker
@@ -119,7 +144,7 @@ mainSteps:
     - mkdir -p /home/ec2-user/repositories/
 
     - echo '=== CLEANING EC2-USER ==='
-    - echo 'export PATH="$PATH:/usr/local/bin:/$HOME/.local/bin:/opt/gradle/gradle-5.0/bin"' >> /home/ec2-user/.bashrc
+    - echo 'export PATH="$PATH:/usr/local/bin:/$HOME/.local/bin"' >> /home/ec2-user/.bashrc
     - echo "complete -C '/usr/local/bin/aws_completer' aws" >> /home/ec2-user/.bash_profile
 
     - rm -rf /home/ec2-user/environment/README.md

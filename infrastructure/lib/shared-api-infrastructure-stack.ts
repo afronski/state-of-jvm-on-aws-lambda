@@ -121,5 +121,31 @@ export class SharedAPIInfrastructureStack extends Stack {
       babashkaRuntimeLayerARN: props.babashkaRuntimeLayerARN,
       babashkaDependenciesPath: "../sources/23-clojure-custom-runtime/.holy-lambda/bb-clj-deps"
     });
+
+    new LambdaInfrastructureStack(this, "Function-Java-11-GraalVM", {
+      functionName: "ip-checker-java-11-graalvm",
+
+      runtime: Runtime.PROVIDED_AL2,
+      memorySize: 256,
+
+      handler: "ipchecker.App",
+      artifactPath: "../sources/31-java-11-graalvm/target/ip-checker.zip",
+
+      sharedAPI: this.sharedAPI
+    });
+
+    new LambdaInfrastructureStack(this, "Function-Clojure-GraalVM", {
+      functionName: "ip-checker-clj-graalvm",
+
+      runtime: Runtime.PROVIDED_AL2,
+      memorySize: 256,
+
+      handler: "ip-checker.core.CheckIPLambda",
+      artifactPath: "../sources/32-clojure-graalvm/.holy-lambda/build/latest.zip",
+
+      sharedAPI: this.sharedAPI,
+
+      nativeImageEntrypoint: "ip-checker.core"
+    });
   }
 }

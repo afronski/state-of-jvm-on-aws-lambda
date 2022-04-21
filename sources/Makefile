@@ -1,7 +1,12 @@
 all: install
 
-install: java8 java11 clj java11-jit-opt clj-jit-opt clj-custom-runtime
-clean: clean-java8 clean-java11 clean-clj clean-java11-jit-opt clean-clj-jit-opt clean-clj-custom-runtime
+install: java8 java11 clj 																						 \
+				 java11-jit-opt clj-jit-opt clj-custom-runtime								 \
+				 java11-graalvm clj-graalvm
+
+clean: clean-java8 clean-java11 clean-clj														   \
+			 clean-java11-jit-opt clean-clj-jit-opt clean-clj-custom-runtime \
+		   clean-java11-graalvm clean-clj-graalvm
 
 java8:
 	cd 11-java-8 && ./gradlew build
@@ -39,3 +44,17 @@ clj-custom-runtime:
 
 clean-clj-custom-runtime:
 	cd 23-clojure-custom-runtime && bb hl:clean
+
+java11-graalvm:
+	cd 31-java-11-graalvm && mvn clean install -P native-image
+
+clean-java11-graalvm:
+	cd 31-java-11-graalvm && mvn clean -P native-image
+
+clj-graalvm:
+	cd 32-clojure-graalvm && bb hl:babashka:sync
+	cd 32-clojure-graalvm && bb hl:compile
+	cd 32-clojure-graalvm && bb hl:native:executable
+
+clean-clj-graalvm:
+	cd 32-clojure-graalvm && bb hl:clean

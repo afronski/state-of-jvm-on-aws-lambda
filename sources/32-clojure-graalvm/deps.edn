@@ -1,5 +1,6 @@
 {:deps {org.clojure/clojure                  {:mvn/version "1.11.1"}
         io.github.FieryCod/holy-lambda       {:mvn/version "0.6.6"}
+        com.github.clj-easy/graal-build-time {:mvn/version "0.1.4"}
         org.clj-commons/clj-http-lite        {:mvn/version "0.4.392"}
        }
 

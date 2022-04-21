@@ -20,4 +20,6 @@ export interface LambdaInfrastructureStackProps extends NestedStackProps {
   holyLambdaEntrypoint?: string;
   babashkaRuntimeLayerARN?: string;
   babashkaDependenciesPath?: string;
+
+  nativeImageEntrypoint?: string;
 }

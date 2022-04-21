@@ -22,6 +22,10 @@ export class LambdaInfrastructureStack extends NestedStack {
       variables["HL_ENTRYPOINT"] = props.holyLambdaEntrypoint;
     }
 
+    if (props.nativeImageEntrypoint) {
+      variables["Entrypoint"] = props.nativeImageEntrypoint;
+    }
+
     const layers = [];
 
     if (props.babashkaRuntimeLayerARN && props.babashkaDependenciesPath) {
