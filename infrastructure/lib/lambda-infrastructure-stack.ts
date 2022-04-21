@@ -12,6 +12,12 @@ export class LambdaInfrastructureStack extends NestedStack {
   constructor(scope: Construct, id: string, props: LambdaInfrastructureStackProps) {
     super(scope, id, props);
 
+    const variables: { [key: string]: string } = {};
+
+    if (!!props.stopTieredCompilation) {
+      variables["JAVA_TOOL_OPTIONS"] = "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+    }
+
     const implementation = new Function(this, "LambdaFunction", {
       functionName: props.functionName,
 
@@ -23,7 +29,9 @@ export class LambdaInfrastructureStack extends NestedStack {
       memorySize: props.memorySize,
 
       timeout: Duration.seconds(25),
-      logRetention: RetentionDays.FIVE_DAYS
+      logRetention: RetentionDays.FIVE_DAYS,
+
+      environment: variables
     });
 
     // Amazon API Gateway resource and method.

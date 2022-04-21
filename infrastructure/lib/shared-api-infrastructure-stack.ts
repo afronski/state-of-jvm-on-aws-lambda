@@ -48,7 +48,7 @@ export class SharedAPIInfrastructureStack extends Stack {
       memorySize: 256,
 
       handler: "ipchecker.App",
-      artifactPath: "../sources/01-java-8/build/distributions/ip-checker-1.0.0.zip",
+      artifactPath: "../sources/11-java-8/build/distributions/ip-checker-1.0.0.zip",
 
       sharedAPI: this.sharedAPI
     });
@@ -60,10 +60,49 @@ export class SharedAPIInfrastructureStack extends Stack {
       memorySize: 256,
 
       handler: "ipchecker.App",
-      artifactPath: "../sources/02-java-11/build/distributions/ip-checker-1.0.0.zip",
+      artifactPath: "../sources/12-java-11/build/distributions/ip-checker-1.0.0.zip",
 
       sharedAPI: this.sharedAPI
     });
 
+    new LambdaInfrastructureStack(this, "Function-Clojure", {
+      functionName: "ip-checker-clj",
+
+      runtime: Runtime.JAVA_11,
+      memorySize: 256,
+
+      handler: "ipchecker.app::handler",
+      artifactPath: "../sources/13-clojure/target/ip-checker-1.0.0-standalone.jar",
+
+      sharedAPI: this.sharedAPI
+    });
+
+    new LambdaInfrastructureStack(this, "Function-Java-11-JIT-Optimization", {
+      functionName: "ip-checker-java-11-jit-opt",
+
+      runtime: Runtime.JAVA_11,
+      memorySize: 256,
+
+      handler: "ipchecker.App",
+      artifactPath: "../sources/21-java-11-jit-opt/build/distributions/ip-checker-1.0.0.zip",
+
+      sharedAPI: this.sharedAPI,
+
+      stopTieredCompilation: true
+    });
+
+    new LambdaInfrastructureStack(this, "Function-Clojure-JIT-optimization", {
+      functionName: "ip-checker-clj-jit-opt",
+
+      runtime: Runtime.JAVA_11,
+      memorySize: 256,
+
+      handler: "ipchecker.app::handler",
+      artifactPath: "../sources/23-clojure-jit-opt/target/ip-checker-1.0.0-standalone.jar",
+
+      sharedAPI: this.sharedAPI,
+
+      stopTieredCompilation: true
+    });
   }
 }

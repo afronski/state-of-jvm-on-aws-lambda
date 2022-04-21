@@ -23,10 +23,15 @@ not make this artificially bound only to *Java* it additionally contains similar
 ## How to use that repository?
 
 ```shell
-# After checking out the repository...
+# After checking out the repository - do it in a single terminal session ...
 
 $ make
-$ . .env/bin/activate
+$ source ./.env/bin/activate
+
+$ cd sources
+
+# Build artifacts in every single directory here ...
+
 $ cd infrastructure
 $ npm install
 
@@ -39,7 +44,7 @@ $ cdk deploy Infrastructure-Shared       # Get the repository URL from the outpu
 
 # Generate AWS CodeCommit HTTPS credentials in the AWS IAM for your user.
 
-$ git remote add aws ...                 # Put that repository URL here.
+$ git remote add aws https://...         # Put that repository URL here.
 $ git push aws main
 
 $ npm run deploy

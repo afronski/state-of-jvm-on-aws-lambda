@@ -14,4 +14,6 @@ export interface LambdaInfrastructureStackProps extends NestedStackProps {
   artifactPath: string;
 
   sharedAPI: RestApi;
+
+  stopTieredCompilation?: boolean;
 }

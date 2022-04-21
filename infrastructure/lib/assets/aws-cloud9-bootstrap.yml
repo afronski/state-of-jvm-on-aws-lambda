@@ -91,14 +91,19 @@ mainSteps:
     - sudo -i -u ec2-user bash -c 'npm install --force --global npm'
     - sudo -i -u ec2-user bash -c 'npm install --force --global typescript aws-cdk'
 
-    - echo '=== INSTALL AND CONFIGURE JAVA ==='
+    - echo '=== INSTALL AND CONFIGURE JAVA AND ITS DEPENDENCIES ==='
     - yum install -y java-11-amazon-corretto-headless
+
     - GRADLE_VERSION=5.0
     - GRADLE_URL="https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip"
     - mkdir -p /opt/gradle
     - wget -O "/tmp/gradle-${GRADLE_VERSION}-bin.zip" "${GRADLE_URL}"
     - unzip -d /opt/gradle "/tmp/gradle-${GRADLE_VERSION}-bin.zip"
     - chown -R ec2-user:ec2-user /opt/gradle
+
+    - wget -O "/usr/local/bin/lein" "https://raw.github.com/technomancy/leiningen/stable/bin/lein"
+    - chmod a+x "/usr/local/bin/lein"
+    - chown ec2-user:ec2-user "/usr/local/bin/lein"
 
     - echo '=== INSTALL AND CONFIGURE DOCKER ==='
     - yum install -y docker
