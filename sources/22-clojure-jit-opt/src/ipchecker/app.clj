@@ -12,8 +12,8 @@
 
 (defn -handler
   [event]
-  (letfn [(checkIp
+  (letfn [(check-ip
            []
            (str/trim (get (client/get "https://checkip.amazonaws.com") :body)))
          ]
-    (merge lambda_default {"body" (json/generate-string {"ip" (checkIp)})})))
+    (merge lambda_default {"body" (json/generate-string {"ip" (check-ip)})})))

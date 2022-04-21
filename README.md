@@ -19,6 +19,8 @@ not make this artificially bound only to *Java* it additionally contains similar
 - Last, but not least - do either of two (I prefer the latter):
   - Deploy *AWS Lambda Power Tuning* state machine as requested [here](https://github.com/alexcasalboni/aws-lambda-power-tuning/blob/master/README-DEPLOY.md).
   - Deploy *AWS Lambda Power Tuner UI* as it is described [here](https://github.com/mattymoomoo/aws-power-tuner-ui#how-do-you-deploy-and-run-the-website-in-your-aws-account).
+- Deploy [this layer]() to your AWS account in the region where you will deploy your stacks.
+  - Note down the *ARN* of the layer as you will need that later.
 
 ## How to use that repository?
 
@@ -29,13 +31,13 @@ $ make
 $ source ./.env/bin/activate
 
 $ cd sources
+$ make
 
-# Build artifacts in every single directory here ...
-
-$ cd infrastructure
+$ cd ../infrastructure
 $ npm install
 
 $ export AWS_USERNAME=<YOUR_IAM_USERNAME>
+$ export BABASHKA_RUNTIME_LAYER_ARN=<ARN_YOU_HAVE_NOTED_DOWN>
 
 $ cdk bootstrap
 

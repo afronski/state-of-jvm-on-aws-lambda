@@ -1,0 +1,42 @@
+{:deps {io.github.FieryCod/holy-lambda-babashka-tasks
+        {:git/url   "https://github.com/FieryCod/holy-lambda"
+         :deps/root "./modules/holy-lambda-babashka-tasks"
+         :sha       "1469bb96b85c2c65a52df9e3a4914dde1b4c816f"
+        }
+        io.github.FieryCod/holy-lambda {:mvn/version "0.6.6"}
+       }
+
+ :min-bb-version "0.3.7"
+
+ :holy-lambda/options {:docker {:network nil
+                                :volumes []
+                                :image "ghcr.io/fierycod/holy-lambda-builder:amd64-java11-22.0.0.2"
+                               }
+
+                       :build {:compile-cmd  "clojure -X:uberjar"
+                               :graalvm-home "~/.graalvm"
+                              }
+
+                       :backend {:pods {}
+                                 :bootstrap-file "bootstrap"
+                                 :native-deps "resources"
+                                 :native-image-args ["--verbose"
+                                                     "--no-fallback"
+                                                     "--report-unsupported-elements-at-runtime"
+                                                     "-H:+AllowIncompleteClasspath"
+                                                     "--no-server"]
+                                }
+                      }
+
+ :tasks {:requires            ([holy-lambda.tasks])
+         hl:docker:run        holy-lambda.tasks/hl:docker:run
+         hl:native:conf       holy-lambda.tasks/hl:native:conf
+         hl:native:executable holy-lambda.tasks/hl:native:executable
+         hl:babashka:sync     holy-lambda.tasks/hl:babashka:sync
+         hl:compile           holy-lambda.tasks/hl:compile
+         hl:doctor            holy-lambda.tasks/hl:doctor
+         hl:clean             holy-lambda.tasks/hl:clean
+         hl:update-bb-tasks   holy-lambda.tasks/hl:update-bb-tasks
+         hl:version           holy-lambda.tasks/hl:version
+        }
+}

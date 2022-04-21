@@ -1,15 +1,16 @@
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 import { RestApi } from "aws-cdk-lib/aws-apigateway";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 
 import { LambdaInfrastructureStack } from "./lambda-infrastructure-stack";
+import { SharedAPIInfrastructureStackProps } from "./props/shared-api-infrastructure-stack-props";
 
 export class SharedAPIInfrastructureStack extends Stack {
   public readonly sharedAPI: RestApi;
 
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: SharedAPIInfrastructureStackProps) {
     super(scope, id, props);
 
     // Shared Amazon API Gateway for the deployed AWS Lambda entry points.
@@ -88,7 +89,7 @@ export class SharedAPIInfrastructureStack extends Stack {
 
       sharedAPI: this.sharedAPI,
 
-      stopTieredCompilation: true
+      stopTieredCompilationAtLevel1: true
     });
 
     new LambdaInfrastructureStack(this, "Function-Clojure-JIT-optimization", {
@@ -102,7 +103,23 @@ export class SharedAPIInfrastructureStack extends Stack {
 
       sharedAPI: this.sharedAPI,
 
-      stopTieredCompilation: true
+      stopTieredCompilationAtLevel1: true
+    });
+
+    new LambdaInfrastructureStack(this, "Function-Clojure-Custom-Runtime", {
+      functionName: "ip-checker-clj-custom-runtime",
+
+      runtime: Runtime.PROVIDED_AL2,
+      memorySize: 256,
+
+      handler: "ip-checker.core.CheckIPLambda",
+      artifactPath: "../sources/23-clojure-custom-runtime/.holy-lambda/build/output.jar",
+
+      sharedAPI: this.sharedAPI,
+
+      holyLambdaEntrypoint: "ip-checker.core",
+      babashkaRuntimeLayerARN: props.babashkaRuntimeLayerARN,
+      babashkaDependenciesPath: "../sources/23-clojure-custom-runtime/.holy-lambda/bb-clj-deps"
     });
   }
 }

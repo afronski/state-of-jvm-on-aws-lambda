@@ -15,5 +15,9 @@ export interface LambdaInfrastructureStackProps extends NestedStackProps {
 
   sharedAPI: RestApi;
 
-  stopTieredCompilation?: boolean;
+  stopTieredCompilationAtLevel1?: boolean;
+
+  holyLambdaEntrypoint?: string;
+  babashkaRuntimeLayerARN?: string;
+  babashkaDependenciesPath?: string;
 }

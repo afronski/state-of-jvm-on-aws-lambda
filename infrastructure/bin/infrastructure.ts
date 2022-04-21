@@ -15,6 +15,8 @@ const region = process.env.AWS_REGION || process.env.CDK_DEFAULT_REGION || null;
 
 const userName = process.env.AWS_USERNAME || null;
 
+const babashkaRuntimeLayerARN = process.env.BABASHKA_RUNTIME_LAYER_ARN || null;
+
 if (!account) {
   throw new Error("Environment variable `AWS_ACCOUNT_ID` or `CDK_DEFAULT_ACCOUNT` is required.");
 }
@@ -25,6 +27,10 @@ if (!region) {
 
 if (!userName) {
   throw new Error("Environment variable `AWS_USERNAME` is required.");
+}
+
+if (!babashkaRuntimeLayerARN) {
+  throw new Error("Environment variable `BABASHKA_RUNTIME_LAYER_ARN` is required.");
 }
 
 const SHARED_ENVIRONMENT_SETTINGS = {
@@ -48,5 +54,7 @@ new IDEInfrastructureStack(app, "Infrastructure-IDE", {
 });
 
 new SharedAPIInfrastructureStack(app, "Infrastructure-API", {
-  ...SHARED_ENVIRONMENT_SETTINGS
+  ...SHARED_ENVIRONMENT_SETTINGS,
+
+  babashkaRuntimeLayerARN
 });

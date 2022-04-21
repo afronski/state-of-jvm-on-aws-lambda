@@ -7,11 +7,15 @@ node_modules/
 # Java dependencies.
 build/
 .gradle/
-target/
 .settings/
 .classpath
 .project
 *.class
+
+# Clojure dependencies.
+target/
+.cpcache/
+.holy-lambda/
 
 # IDEs.
 .vscode/
