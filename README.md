@@ -12,14 +12,14 @@ not make this artificially bound only to *Java* it additionally contains similar
   - Most recent *AWS CLI*.
   - Most recent *AWS SAM*.
   - *AWS CDK* in version 2.x or higher.
-  - OpenJDK 8 or higher (ideally *Amazon Corretto* 11.x).
+  - OpenJDK 11 or higher (ideally *Amazon Corretto* 11.x).
   - Gradle 5.x or higher.
   - Node.js v16.x or higher.
 - Configured profile in the installed *AWS CLI* for your *AWS IAM* User account of choice.
 - Last, but not least - do either of two (I prefer the latter):
   - Deploy *AWS Lambda Power Tuning* state machine as requested [here](https://github.com/alexcasalboni/aws-lambda-power-tuning/blob/master/README-DEPLOY.md).
   - Deploy *AWS Lambda Power Tuner UI* as it is described [here](https://github.com/mattymoomoo/aws-power-tuner-ui#how-do-you-deploy-and-run-the-website-in-your-aws-account).
-- Deploy [this layer]() to your AWS account in the region where you will deploy your stacks.
+- Deploy [this layer](https://serverlessrepo.aws.amazon.com/applications/eu-central-1/443526418261/holy-lambda-babashka-runtime-amd64) to your AWS account in the region where you will deploy your stacks.
   - Note down the *ARN* of the layer as you will need that later.
 
 ## How to use that repository?
@@ -53,6 +53,8 @@ $ npm run deploy
 ```
 
 From now on everything can be done from the *AWS Cloud9* that is set up by the *infrastructure as code* used above.
+
+If you are interested in seeing relevant slides, [contact me directly](https://awsmaniac.com/contact).
 
 ## License
 

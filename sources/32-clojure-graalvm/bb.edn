@@ -23,7 +23,8 @@
                                  :native-image-args ["--verbose"
                                                      "--no-fallback"
                                                      "--report-unsupported-elements-at-runtime"
-                                                     "--enable-url-protocols=http,https"
+                                                     "--enable-http"
+                                                     "--enable-https"
                                                      "-H:+AllowIncompleteClasspath"
                                                      "--no-server"]
                                 }

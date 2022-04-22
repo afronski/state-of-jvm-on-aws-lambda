@@ -1,0 +1,56 @@
+{
+  "lambdaARN": "<PUT_HERE_THE_ARN>",
+
+  "powerValues": [
+    128, 256, 384, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664, 1792, 1920, 1976,
+    2048, 2176, 2304, 2432, 2560, 2688, 2816, 2944, 3008
+  ],
+
+  "num": 100,
+  "parallelInvocation": true,
+
+  "strategy": "balanced",
+  "balancedWeight": 0.5,
+
+  "payload": {
+    "body": "",
+    "resource": "/{proxy+}",
+    "path": "/irrelevant",
+    "httpMethod": "GET",
+    "queryStringParameters": {},
+    "multiValueQueryStringParameters": {},
+    "pathParameters": {
+      "proxy": "/irrelevant"
+    },
+    "headers": {
+      "Accept": "application/json",
+      "User-Agent": "AWS Lambda Power Tuning UA"
+    },
+    "requestContext": {
+      "accountId": "123456789012",
+      "resourceId": "123456",
+      "stage": "prod",
+      "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+      "requestTime": "09/Apr/2015:12:34:56 +0000",
+      "requestTimeEpoch": 1428582896000,
+      "identity": {
+        "cognitoIdentityPoolId": null,
+        "accountId": null,
+        "cognitoIdentityId": null,
+        "caller": null,
+        "accessKey": null,
+        "sourceIp": "127.0.0.1",
+        "cognitoAuthenticationType": null,
+        "cognitoAuthenticationProvider": null,
+        "userArn": null,
+        "userAgent": "AWS Lambda Power Tuning UA",
+        "user": null
+      },
+      "path": "/irrelevant",
+      "resourcePath": "/{proxy+}",
+      "httpMethod": "GET",
+      "apiId": "1234567890",
+      "protocol": "HTTP/1.1"
+    }
+  }
+}
